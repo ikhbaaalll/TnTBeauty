@@ -14,6 +14,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::query()
+            ->when(
+                request()->query('type'),
+                function ($query) {
+                    $query->where('category', request()->query('type'));
+                }
+            )
             ->with(['brand', 'skins', 'ingredients'])
             ->paginate(10);
 

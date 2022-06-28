@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Add Brand
+            Edit Brand
         </div>
 
         @if ($errors->any())
@@ -17,11 +17,12 @@
         @endif
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.brands.store') }}">
+            <form method="POST" action="{{ route('admin.brands.update', $brand) }}">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label class="form-label" for="name">Nama</label>
-                    <input type="text" name="name" value="{{ old('name') }}" id="name"
+                    <input type="text" name="name" value="{{ $brand->name }}" id="name"
                         class="form-control @error('name') is-invalid @enderror" required autofocus
                         placeholder="Masukkan nama">
                 </div>

@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Imports\Brand as ImportsBrand;
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class BrandController extends Controller
 {
     public function index()
     {
-        $brands = Brand::paginate();
+        $brands = Brand::get();
 
         return view('pages.admin.brand.index', compact('brands'));
     }
@@ -24,18 +22,36 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        $path1 = $request->file('file')->store('temp');
-        $path = storage_path('app') . '/' . $path1;
+        $request->validate([
+            'name' => ['required'],
+        ]);
 
-        $brands = Excel::toCollection(new ImportsBrand, $path);
+        $brand = Brand::create([
+            'name' => $request->name
+        ]);
 
-        // dd($brands[0]);
+        return to_route('admin.brands.index');
+    }
 
-        foreach ($brands[0] as $brand) {
-            Brand::create([
-                'name' => $brand[0]
-            ]);
-        }
+    public function edit(Brand $brand)
+    {
+        return view('pages.admin.brand.edit', compact('brand'));
+    }
+
+    public function update(Request $request, Brand $brand)
+    {
+        $request->validate([
+            'name' => ['required'],
+        ]);
+
+        $brand->update($request->all());
+
+        return to_route('admin.brands.index');
+    }
+
+    public function destroy(Brand $brand)
+    {
+        $brand->delete();
 
         return to_route('admin.brands.index');
     }

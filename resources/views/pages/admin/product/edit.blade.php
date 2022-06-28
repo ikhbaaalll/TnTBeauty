@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Add Product
+            Edit Product
         </div>
 
         @if ($errors->any())
@@ -17,59 +17,65 @@
         @endif
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label class="form-label" for="name">Nama</label>
-                    <input type="text" name="name" value="{{ old('name') }}" id="name"
+                    <input type="text" name="name" value="{{ $product->name }}" id="name"
                         class="form-control @error('name') is-invalid @enderror" required autofocus
                         placeholder="Masukkan nama">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="variation">Nilai Variasi</label>
-                    <input type="text" name="variation" value="{{ old('variation') }}" id="variation"
+                    <input type="text" name="variation" value="{{ $product->variation }}" id="variation"
                         class="form-control @error('variation') is-invalid @enderror" required autofocus
                         placeholder="Masukkan variasi">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="description">Deskripsi</label>
-                    <textarea name="description" id="description" class="form-control" cols="10" rows="5">{{ old('description') }}</textarea>
+                    <textarea name="description" id="description" class="form-control" cols="10" rows="5">{{ $product->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="price">Harga</label>
-                    <input type="number" name="price" value="{{ old('price') }}" id="price"
+                    <input type="number" name="price" value="{{ $product->price }}" id="price"
                         class="form-control @error('price') is-invalid @enderror" required autofocus
                         placeholder="Masukkan harga">
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="brand">Brand</label>
-                    <select name="brand" id="brand" class="form-control">
-                        <option value="" disabled selected>Pilih brand</option>
+                    <label class="form-label" for="brand_id">Brand</label>
+                    <select name="brand_id" id="brand_id" class="form-control">
                         @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            <option value="{{ $brand->id }}" {{ $product->brand_id != $brand->id ?: 'selected' }}>
+                                {{ $brand->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="link">Link</label>
-                    <input type="text" name="link" value="{{ old('link') }}" id="link"
+                    <input type="text" name="link" value="{{ $product->link }}" id="link"
                         class="form-control @error('link') is-invalid @enderror" required autofocus
                         placeholder="Masukkan variasi">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="category">Kategori</label>
                     <select name="category" id="category" class="form-control">
-                        <option value="" disabled selected>Pilih Kategori</option>
-                        <option value="Serum">Serum</option>
-                        <option value="Facial Foam">Facial Foam</option>
-                        <option value="Daily Cream">Daily Cream</option>
-                        <option value="Cleanser">Cleanser</option>
-                        <option value="Face Mist">Face Mist</option>
-                        <option value="EyeCream">EyeCream</option>
-                        <option value="Sunscreen">Sunscreen</option>
-                        <option value="Moisturizer">Moisturizer</option>
-                        <option value="Mask">Mask</option>
-                        <option value="Essence Toner">Essence Toner</option>
+                        <option value="Serum" {{ $product->category != 'Serum' ?: 'selected' }}>Serum</option>
+                        <option value="Facial Foam" {{ $product->category != 'Facial Foam' ?: 'selected' }}>Facial Foam
+                        </option>
+                        <option value="Daily Cream" {{ $product->category != 'Daily Cream' ?: 'selected' }}>Daily Cream
+                        </option>
+                        <option value="Cleanser" {{ $product->category != 'Cleanser' ?: 'selected' }}>Cleanser</option>
+                        <option value="Face Mist" {{ $product->category != 'Face Mist' ?: 'selected' }}>Face Mist
+                        </option>
+                        <option value="EyeCream" {{ $product->category != 'EyeCream' ?: 'selected' }}>EyeCream</option>
+                        <option value="Sunscreen" {{ $product->category != 'Sunscreen' ?: 'selected' }}>Sunscreen
+                        </option>
+                        <option value="Moisturizer" {{ $product->category != 'Moisturizer' ?: 'selected' }}>Moisturizer
+                        </option>
+                        <option value="Mask" {{ $product->category != 'Mask' ?: 'selected' }}>Mask</option>
+                        <option value="Essence Toner" {{ $product->category != 'Essence Toner' ?: 'selected' }}>Essence
+                            Toner</option>
                     </select>
                 </div>
                 <div class="form-group">

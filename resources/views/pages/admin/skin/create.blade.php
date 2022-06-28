@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Add Brand
+            Add Skin Type
         </div>
 
         @if ($errors->any())
@@ -17,7 +17,7 @@
         @endif
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.brands.store') }}">
+            <form method="POST" action="{{ route('admin.products.skins.store', $product) }}">
                 @csrf
                 <div class="form-group">
                     <label class="form-label" for="name">Nama</label>

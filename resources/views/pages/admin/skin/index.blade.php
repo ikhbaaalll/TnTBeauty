@@ -3,44 +3,30 @@
 @section('content')
     <div class="card mb-4">
         <div class="card-header">
-            {{ __('Product') }}
+            {{ __('Skin') }}
         </div>
 
         <!-- <div class="alert alert-info" role="alert">Sample table page</div> -->
+
         <div class="card-body">
-            <a href="{{ route('admin.products.create') }}" class="btn btn-success mb-3 text-light">Create</a>
+            <a href="{{ route('admin.products.skins.create', $product) }}"
+                class="btn btn-success mb-3 text-light">Create</a>
             <div class="table-responsive">
                 <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                     <thead>
                         <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Variation</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Purpose</th>
-                            <th scope="col">Skin</th>
-                            <th scope="col" style="width: 100px;">Action</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($products as $product)
+                        @foreach ($skins as $skin)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->brand->name }}</td>
-                                <td>{{ $product->category }}</td>
-                                <td>{{ $product->variation }}</td>
-                                <td>{{ number_format($product->price, 2) }}</td>
-                                <td><a href="{{ route('admin.products.purposes.index', $product) }}"
-                                        class="btn btn-sm btn-info">Purpose</a></td>
-                                <td><a href="{{ route('admin.products.skins.index', $product) }}"
-                                        class="btn btn-sm btn-info">Skin</a></td>
-                                <td><a href="{{ route('admin.products.edit', $product) }}"
+                                <td>{{ $skin->name }}</td>
+                                <td><a href="{{ route('admin.products.skins.edit', [$product, $skin]) }}"
                                         class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('admin.products.destroy', $product) }}" method="POST"
-                                        class="d-inline-block">
+                                    <form action="{{ route('admin.products.skins.destroy', [$product, $skin]) }}"
+                                        method="POST" class="d-inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger d-inline-block"
@@ -52,6 +38,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 @endsection

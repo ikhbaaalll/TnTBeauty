@@ -20,6 +20,10 @@
         *:after {
             box-sizing: border-box;
         }
+
+        body {
+            overflow-x: hidden;
+        }
     </style>
     @yield('css')
 </head>
@@ -45,7 +49,7 @@
             </li>
         </ul> --}}
     </nav>
-    <div class="container">
+    <div class="col">
         @yield('content')
     </div>
 
